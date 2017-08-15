@@ -1,0 +1,18 @@
+sharding:
+#  configDB: {{ replname }}/{{ confighosts | join(',') }}
+#  configDB: {{ replname }}/{% for hosts in groups.confignode|batch(4, '&nbsp;')  %}{% for host in hosts %}{{ host }}:{{ configport }},{% endfor %}{% endfor %}
+  configDB:{{ replname }}/{{ confighosts | join(',')}}
+#  configDB: {{ 'ssddddd,asdsdaa,      '| trim() }}
+#  去空格
+#{% set pipe = joiner("|") %}
+configDB: {{ replname }}/{{ confighost | join(',') }}
+
+systemLog:
+  destination: file
+  path: "/data/mongolog/mongos.log"
+  logAppend: true
+  logRotate: rename
+net:
+  port: 27017
+processManagement:
+  fork: true

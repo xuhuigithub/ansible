@@ -1,0 +1,19 @@
+sharding:
+  clusterRole: shardsvr
+replication:
+  replSetName: {{ arbitrator }}
+systemLog:
+  destination: file
+  logAppend: true
+  logRotate: rename
+  path: {{ loghome }}/{{ arbitrator }}.log
+processManagement:
+  fork: true
+net:
+  bindIp: {{ ansible_default_ipv4['address'] }}
+  port: {{ arbitratorport }}
+operationProfiling:
+  mode: slowOp
+  slowOpThresholdMs: 100
+storage:
+  dbPath: {{arbitratordata}}

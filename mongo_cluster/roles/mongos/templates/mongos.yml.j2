@@ -1,0 +1,11 @@
+sharding:
+  configDB: {{ replname }}/{{ confighosts | join(',') }}
+systemLog:
+  destination: file
+  path: "/data/mongolog/mongos.log"
+  logAppend: true
+  logRotate: rename
+net:
+  port: {{ mongosport }}
+processManagement:
+  fork: true

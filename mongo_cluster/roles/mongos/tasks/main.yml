@@ -1,0 +1,10 @@
+---
+- name: copy mongos config file
+  template: src=mongos.yml.j2 dest={{ confighome }}/mongos.yml owner={{ mongouser }} group={{ mongouser }}
+
+- name: add mongos to startup.sh
+  lineinfile: dest={{ startupscript }} line='su {{ mongouser }} -c "{{ mongohome }}/mongos --config {{ confighome }}/mongos.yml"' insertafter='EOF'  state=present
+
+- name: copy config_node js file
+  template: src=configinit.js.j2 dest={{ confighome }}/configinit.js owner={{ mongouser }} group={{ mongouser }}
+...

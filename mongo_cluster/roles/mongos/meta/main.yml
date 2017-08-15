@@ -1,0 +1,4 @@
+---
+dependencies:
+  - { role: mongo_confignode }
+#因为依赖所以在执行当前role时会执行一次role mongo_confignode

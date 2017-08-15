@@ -1,0 +1,16 @@
+sharding:
+  clusterRole: configsvr
+replication:
+  replSetName: {{ replname }}
+  #所有config 节点一致
+systemLog:
+  destination: file
+  path: "{{ loghome }}/config.log"
+  logAppend: true
+  logRotate: rename
+net:
+  port: {{ configport }}
+storage:
+  dbPath: "{{ dbhome }}/configdb"
+processManagement:
+  fork: true

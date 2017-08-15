@@ -1,0 +1,31 @@
+---
+#don't use port variable
+mongouser: mongo
+#mongo的用户
+mongouserpwd: mongo
+#mongo的用户密码
+mongohome: /home/{{ mongouser }}/bin
+#二进制文件存放地点
+confighome: /home/{{ mongouser }}/config
+#配置文件存放地点
+datapath: /data
+#主目录
+dbhome: /data/mongodata
+#数据存放地点
+loghome: /data/mongolog
+#日志存放地点
+getbinurl: http://192.168.100.133/share/mongobin.tgz
+#获取mongo二进制文件的地址
+repl: enable
+#是否启用复制集
+arbitration: enable
+#是否启用仲裁节点
+replname: test
+#config_node集群复制集名称
+configport: 27018
+#config_node 端口 放在这里是因为mongos role 要调用
+mongosvarfile: /tmp/mongosvar.yml
+#config_node-role生成的配置mongos的变量文件
+startupscript: /home/{{ mongouser }}/startup.sh
+#自启动脚本文件
+...

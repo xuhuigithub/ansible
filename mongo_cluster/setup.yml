@@ -1,0 +1,34 @@
+#!/usr/bin/env ansible-playbook
+- hosts: mongodb
+  remote_user: root
+  vars_files:
+  - var.yml
+  roles:
+  - role: setup_mongo
+  tags:
+    - setup_mongo
+
+- hosts: mongod
+  vars_files:
+  - var.yml
+  roles:
+  - role: mongod
+  tags:
+    - mongod
+
+- hosts: confignode
+  vars_files:
+  - var.yml
+  roles:
+  - role: mongo_confignode
+  tags:
+    - config_node
+
+- hosts: mongos
+  vars_files:
+  - var.yml
+  - "{{ mongosvarfile }}"
+  roles:
+  - role: mongos
+  tags:
+    - mongos

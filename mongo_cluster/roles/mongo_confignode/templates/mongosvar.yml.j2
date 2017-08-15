@@ -1,0 +1,4 @@
+confighosts:
+{% for hosts in groups['confignode'] %}
+  - {{ hosts }}:{{ configport }}
+{% endfor %}

@@ -1,0 +1,16 @@
+#!/bin/bash
+{% if repl in 'enable' and arbitration in 'enable' %}
+su {{ mongouser }} -c "{{ mongohome }}/mongod -f {{ confighome }}/config.yml"
+su {{ mongouser }} -c "{{ mongohome }}/mongod -f {{ confighome }}/{{ primary }}.yml"
+su {{ mongouser }} -c "{{ mongohome }}/mongod -f {{ confighome }}/{{ second }}.yml"
+su {{ mongouser }} -c "{{ mongohome }}/mongod -f {{ confighome }}/{{ arbitrator }}.yml"
+{% endif %}
+{% if repl in 'enable' and arbitration in 'disable' %}
+su {{ mongouser }} -c "{{ mongohome }}/mongod -f {{ confighome }}/config.yml"
+su {{ mongouser }} -c "{{ mongohome }}/mongod -f {{ confighome }}/{{ primary }}.yml"
+su {{ mongouser }} -c "{{ mongohome }}/mongod -f {{ confighome }}/{{ second }}.yml"
+{% endif %}
+{% if repl in 'disable' and arbitration in 'disable' %}
+su {{ mongouser }} -c "{{ mongohome }}/mongod -f {{ confighome }}/config.yml"
+su {{ mongouser }} -c "{{ mongohome }}/mongod -f {{ confighome }}/{{ primary }}.yml"
+{% endif %}

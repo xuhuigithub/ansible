@@ -1,0 +1,3 @@
+---
+# defaults file for mongos
+mongosport: 27017

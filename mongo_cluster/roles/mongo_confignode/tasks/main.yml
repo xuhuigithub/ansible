@@ -1,0 +1,10 @@
+---
+- name: copy config file
+  template: src=config.yml.j2 dest={{ confighome }}/config.yml owner={{ mongouser }} group={{ mongouser }}
+
+- name: mk config_node dir
+  file: path={{ dbhome }}/configdb state=directory mode=0755 owner={{ mongouser }} group={{ mongouser }}
+
+- name: make mongos var file
+  local_action: template src=mongosvar.yml.j2 dest={{ mongosvarfile }}
+...

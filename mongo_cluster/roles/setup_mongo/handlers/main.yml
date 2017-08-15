@@ -1,0 +1,5 @@
+---
+# handlers file for ins_service
+- name: system service started
+  service: name={{ item }} state=started enabled={{ choice }}
+  with_items: "{{ service_name }}"

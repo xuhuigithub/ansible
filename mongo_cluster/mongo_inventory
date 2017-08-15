@@ -1,0 +1,21 @@
+[mongodb] 
+mongo1 hostname=mongo1 ansible_host=192.168.100.141
+mongo2 hostname=mongo2 ansible_host=192.168.100.142
+mongo3 hostname=mongo3 ansible_host=192.168.100.143
+mongo4 hostname=mongo4 ansible_host=192.168.100.144
+
+[mongod]
+mongo1 primary=shard1 second=shard2 arbitrator=shard4 ansible_host=192.168.100.141
+mongo2 primary=shard2 second=shard3 arbitrator=shard1 ansible_host=192.168.100.142
+mongo3 primary=shard3 second=shard4 arbitrator=shard2 ansible_host=192.168.100.143
+mongo4 primary=shard4 second=shard1 arbitrator=shard3 ansible_host=192.168.100.144
+
+[confignode]
+mongo1 ansible_host=192.168.100.141
+mongo2 ansible_host=192.168.100.142
+mongo3 ansible_host=192.168.100.143
+
+[mongos]
+mongo1 ansible_host=192.168.100.141
+mongo2 ansible_host=192.168.100.142
+mongo3 ansible_host=192.168.100.143

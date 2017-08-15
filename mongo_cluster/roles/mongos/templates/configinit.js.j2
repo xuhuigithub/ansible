@@ -1,0 +1,13 @@
+rs.initiate( {
+   _id: "{{ replname }}",
+   configsvr: true,
+   members: [
+{% for host in confighosts %}
+{% if not loop.last %}
+           { _id: {{ loop.index0 }}, host: "{{ host }}" },
+{% else %}
+           { _id: {{ loop.index0 }}, host: "{{ host }}" }
+{% endif %}
+{% endfor %}
+   ]
+});

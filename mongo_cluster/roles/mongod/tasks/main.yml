@@ -1,0 +1,52 @@
+---
+- name: mk cluster dir
+  file: path={{ item }} state=directory mode=0755 owner={{ mongouser }} group={{ mongouser }}
+  with_items:
+    - "{{ confighome }}"
+    - "{{ datapath }}"
+    - "{{ dbhome }}"
+    - "{{ loghome }}"
+    - "{{ dbhome }}/{{ primary }}"
+    - "{{ dbhome }}/{{ second }}"
+    - "{{ dbhome }}/{{ arbitrator }}"
+  when: ( repl == 'enable' and arbitration == 'enable' )
+
+- name: mk cluster repl without arbitrator dir
+  file: path={{ item }} state=directory mode=0755 owner={{ mongouser }} group={{ mongouser }}
+  with_items:
+    - "{{ confighome }}"
+    - "{{ datapath }}"
+    - "{{ dbhome }}"
+    - "{{ loghome }}"
+    - "{{ dbhome }}/{{ primary }}"
+    - "{{ dbhome }}/{{ second }}"
+  when: ( repl == 'enable' and arbitration == 'disable' )
+
+- name: mk cluster standalone shard dir
+  file: path={{ item }} state=directory mode=0755 owner={{ mongouser }} group={{ mongouser }}
+  with_items:
+    - "{{ confighome }}"
+    - "{{ datapath }}"
+    - "{{ dbhome }}"
+    - "{{ loghome }}"
+    - "{{ dbhome }}/{{ primary }}"
+  when: ( repl == 'disable' and arbitration == 'disable' )
+
+- name: copy primary config file
+  template: src=primary.yml.j2 dest={{ confighome }}/{{ primary }}.yml owner={{ mongouser }} group={{ mongouser }}
+
+- name: copy second config file
+  template: src=second.yml.j2 dest={{ confighome }}/{{ second }}.yml owner={{ mongouser }} group={{ mongouser }}
+  when: repl == 'enable'
+
+- name: copy arbitrate node config file
+  template: src=arbitration.yml.j2 dest={{ confighome }}/{{ arbitrator }}.yml owner={{ mongouser }} group={{ mongouser }}
+  when: (arbitration == 'enable' and repl == 'enable')
+
+- name: copy sh file
+  template: src=configstart.sh.j2 dest={{ startupscript }}  owner={{ mongouser }} group={{ mongouser }} mode=755
+
+- name: add {{ startupscript }} to rc.d
+  lineinfile: dest=/etc/rc.d/rc.local line='{{ startupscript }}' insertafter='EOF'  state=present 
+#在文件的最后一行插入
+...

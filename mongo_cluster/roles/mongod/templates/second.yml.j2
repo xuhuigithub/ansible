@@ -1,0 +1,35 @@
+sharding:
+  clusterRole: shardsvr
+replication:
+  replSetName: {{ second }}
+systemLog:
+  destination: file
+  logAppend: true
+  logRotate: rename
+  path: {{ loghome }}/mongod.log
+processManagement:
+  fork: true
+net:
+  bindIp: {{ ansible_default_ipv4['address'] }}
+  port: {{ secondport }}
+  http:
+    enabled: false
+  maxIncomingConnections: 1000
+operationProfiling:
+  mode: slowOp
+  slowOpThresholdMs: 100
+{% if authorization in "enabled" %}
+security:
+  authorization: {{ authorization }}
+{% endif %}
+storage:
+  dbPath: {{ seconddata }}
+  wiredTiger:
+    engineConfig:
+      cacheSizeGB: {{ replmaxmem|int }}
+      directoryForIndexes: true
+    collectionConfig:
+      blockCompressor: zlib
+    indexConfig:
+      prefixCompression: true
+  directoryPerDB: true
