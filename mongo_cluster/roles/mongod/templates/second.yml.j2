@@ -6,7 +6,7 @@ systemLog:
   destination: file
   logAppend: true
   logRotate: rename
-  path: {{ loghome }}/mongod.log
+  path: {{ loghome }}/{{ second }}.log
 processManagement:
   fork: true
 net:
