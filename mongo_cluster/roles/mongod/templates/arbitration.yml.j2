@@ -9,6 +9,11 @@ systemLog:
   path: {{ loghome }}/{{ arbitrator }}.log
 processManagement:
   fork: true
+{% if auth == 'enable' %}
+security:
+  keyFile: "{{ keyfile }}"
+  clusterAuthMode: "keyFile"
+{% endif -%}  
 net:
   bindIp: {{ ansible_default_ipv4['address'] }}
   port: {{ arbitratorport }}

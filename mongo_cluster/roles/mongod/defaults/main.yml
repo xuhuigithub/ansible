@@ -1,21 +1,21 @@
 ---
 # defaults file for mongod
-maxmem: 4
+maxmem: 65
 #mongod主节点最大使用内存
 #maxmem2: '{{ maxmem/2 }}'
 ##这个必须加单引号括起来
-replmaxmem: '{{ maxmem/2 }}'
+replmaxmem: '{{ maxmem }}'
 authorization: disabled
-#是否启用用户验证
+#是否启用用户验证,已弃用
 primarydata: '{{ dbhome }}/{{ primary }}'
 #主节点存放数据位置
 seconddata: '{{ dbhome }}/{{ second }}'
 #从节点存放数据位置
 arbitratordata: '{{ dbhome }}/{{ arbitrator }}'
 #仲裁节点存放数据位置
-primaryport: 27019
+primaryport: 27021
 #复制集主端口
-secondport: 27020
+secondport: 27022
 #复制集从端口
-arbitratorport: 27021
+arbitratorport: 28012
 #仲裁节点端口

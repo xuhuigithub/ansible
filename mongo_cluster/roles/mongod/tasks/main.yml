@@ -47,6 +47,6 @@
   template: src=configstart.sh.j2 dest={{ startupscript }}  owner={{ mongouser }} group={{ mongouser }} mode=755
 
 - name: add {{ startupscript }} to rc.d
-  lineinfile: dest=/etc/rc.d/rc.local line='{{ startupscript }}' insertafter='EOF'  state=present 
+  lineinfile: dest=/etc/rc.d/rc.local line='#mongo\n{{ startupscript }}' insertafter='EOF'  state=present 
 #在文件的最后一行插入
 ...

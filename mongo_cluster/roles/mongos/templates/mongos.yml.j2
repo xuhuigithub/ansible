@@ -7,5 +7,10 @@ systemLog:
   logRotate: rename
 net:
   port: {{ mongosport }}
+{% if auth == 'enable' %}
+security:
+  keyFile: "{{ keyfile }}"
+  clusterAuthMode: "keyFile"
+{% endif %}
 processManagement:
   fork: true

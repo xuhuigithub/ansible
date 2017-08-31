@@ -5,10 +5,10 @@
   user: name={{ mongouser }} comment="mongouser" password={{ mongouserpwd |password_hash('sha512') }} update_password=always
 
 - name: copy rc.d template
-  template: src=rc.local.j2 dest=/etc/rc.d/rc.local mode=644
+  template: src=rc.local.j2 dest=/etc/rc.d/rc.local mode=755
 
 - name: mk bin dir
-  file: path={{ mongohome }} state=directory mode=0755 owner={{ mongouser }} group={{ mongouser }}
+  file: path={{ mongohome }} state=directory mode=755 owner={{ mongouser }} group={{ mongouser }}
 
 - name: getbin
   unarchive: src={{ getbinurl }} dest={{ mongohome }} remote_src=yes owner={{ mongouser }} group={{ mongouser }}
@@ -18,4 +18,10 @@
 
 - name: Generate /etc/hosts file
   template:  src=hosts.j2 dest=/etc/hosts backup=yes
-...
+
+- name: copy ulimit template
+  template: src=limits.conf.j2 dest=/etc/security/limits.conf backup=yes
+
+- name: copy keyfile to mongodb
+  template: src=keyfile.j2 dest=/home/{{ mongouser }}/keyfile owner={{ mongouser }} group={{ mongouser }} mode=600
+  when: ( auth == 'enable' )

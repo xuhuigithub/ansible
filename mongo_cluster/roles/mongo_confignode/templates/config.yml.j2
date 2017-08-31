@@ -10,6 +10,11 @@ systemLog:
   logRotate: rename
 net:
   port: {{ configport }}
+{% if auth == 'enable' %}
+security:
+  keyFile: "{{ keyfile }}"
+  clusterAuthMode: "keyFile"
+{% endif %}
 storage:
   dbPath: "{{ dbhome }}/configdb"
 processManagement:
