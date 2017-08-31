@@ -8,19 +8,23 @@ mongohome: /home/{{ mongouser }}/bin
 #二进制文件存放地点
 confighome: /home/{{ mongouser }}/config
 #配置文件存放地点
-datapath: /data
+datapath: /data1
 #主目录
-dbhome: /data/mongodata
+dbhome: /data1/mongodata
 #数据存放地点
-loghome: /data/mongolog
+loghome: /data1/mongolog
 #日志存放地点
 getbinurl: http://192.168.100.133/share/mongobin.tgz
 #获取mongo二进制文件的地址
 repl: enable
 #是否启用复制集
 arbitration: enable
+#是否启用验证
+auth: disable
+#keyfile path
+keyfile: /home/{{ mongouser }}/keyfile
 #是否启用仲裁节点
-replname: test
+replname: chinadaasB
 #config_node集群复制集名称
 configport: 27018
 #config_node 端口 放在这里是因为mongos role 要调用
